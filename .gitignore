@@ -15,6 +15,9 @@ dist-ssr
 # Playwright MCP driver artifacts (screenshots, session state)
 .playwright-mcp/
 
+# Claude Code agent memory (local session notes)
+.claude/agent-memory/
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
