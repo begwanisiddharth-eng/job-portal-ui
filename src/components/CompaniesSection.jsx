@@ -1,3 +1,4 @@
+import { useMemo } from 'react'
 import { Link } from 'react-router-dom'
 import { useCompanies } from '../contexts/CompaniesContext'
 import { useJobsData } from '../contexts/JobsDataContext'
@@ -7,10 +8,16 @@ const CompaniesSection = () => {
   const { jobs } = useJobsData()
 
   // Get job counts for each company
-  const companiesWithJobCounts = companies.slice(0, 8).map(company => ({
-    ...company,
-    jobCount: jobs.filter(job => job.company === company.name).length
-  }))
+  const companiesWithJobCounts = useMemo(() => {
+    const jobCountByCompany = new Map()
+    for (const job of jobs) {
+      jobCountByCompany.set(job.company, (jobCountByCompany.get(job.company) || 0) + 1)
+    }
+    return companies.slice(0, 8).map(company => ({
+      ...company,
+      jobCount: jobCountByCompany.get(company.name) || 0
+    }))
+  }, [companies, jobs])
   
   // Add gradient colors based on industry
   const getGradient = (industry) => {

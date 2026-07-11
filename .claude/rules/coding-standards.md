@@ -15,7 +15,7 @@ description: Core coding conventions for the JobPortal React codebase
 
 - Tailwind CSS utility classes exclusively — no inline styles, no CSS modules.
 - Mobile-first responsive design using `sm:`, `md:`, `lg:` breakpoints.
-- Dark mode is controlled by `ThemeContext` via conditional class toggling — do NOT use the `dark:` Tailwind variant.
+- Dark mode is controlled by `ThemeContext`, which toggles a `dark`/`light` class on `document.documentElement`. Use Tailwind's `dark:` variant for dark-mode styling — it reads that same class (`darkMode: 'class'`).
 
 ## Naming Conventions
 
