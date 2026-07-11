@@ -177,7 +177,8 @@ export const AuthProvider = ({ children }) => {
       const registeredUsers = JSON.parse(localStorage.getItem('registeredUsers') || '[]');
       const searchPool = [...allDummyUsers, ...registeredUsers];
 
-      const foundUser = searchPool.find(u => u.email === email && u.password === password);
+      const normalizedEmail = email.trim().toLowerCase();
+      const foundUser = searchPool.find(u => u.email.toLowerCase() === normalizedEmail && u.password === password);
 
       if (!foundUser) {
         setIsLoading(false);
@@ -247,7 +248,8 @@ export const AuthProvider = ({ children }) => {
         ...DUMMY_USERS.admins
       ];
 
-      if ([...allDummyUsers, ...registeredUsers].some(u => u.email === userData.email)) {
+      const normalizedEmail = userData.email.trim().toLowerCase();
+      if ([...allDummyUsers, ...registeredUsers].some(u => u.email.toLowerCase() === normalizedEmail)) {
         setIsLoading(false);
         return { success: false, error: 'Email already registered' };
       }
