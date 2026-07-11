@@ -1,0 +1,44 @@
+{
+    "hooks": {
+        "Notification": [
+            {
+                "matcher": "",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "powershell.exe -Command \"[System.Reflection.Assembly]::LoadWithPartialName('System.Windows.Forms'); [System.Windows.Forms.MessageBox]::Show('Claude Code needs your attention', 'Claude Code')\""
+                    }
+                ]
+            }
+        ],
+        "PreToolUse": [
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type": "command",
+                        "command": "python3 .claude/hooks/secret-guard.py"
+                    }
+                ]
+            },
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type":"command",
+                        "command": "python3 .claude/hooks/line_limit.py"
+                    }
+                ]
+            },
+            {
+                "matcher": "Write|Edit",
+                "hooks": [
+                    {
+                        "type":"command",
+                        "command": "powershell.exe -NoProfile -ExecutionPolicy Bypass -File .claude/hooks/protect-files.ps1"
+                    }
+                ]
+            }
+        ]
+    }
+}
