@@ -1,0 +1,3 @@
+- [Project Architecture: Employer CRUD Pattern](project_employer_crud_pattern.md) — postJob/updateJob/deleteJob are sync functions in JobContext; updateJob does NOT write to globalPostedJobs localStorage
+- [User Profile](user_profile.md) — user background and collaboration preferences
+- [src/components Standards Gaps](project_components_standards_gaps.md) — default-exports-only and dark: variant usage are repo-wide patterns, not isolated file defects
