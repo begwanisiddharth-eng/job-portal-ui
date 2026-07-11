@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { useJobsData } from '../contexts/JobsDataContext';
 import { useCompanies } from '../contexts/CompaniesContext';
 
@@ -6,6 +6,13 @@ const RefreshButton = ({ showLabel = true, className = '' }) => {
   const { forceRefresh: refreshJobs, getCacheAge: getJobsCacheAge, loading: jobsLoading } = useJobsData();
   const { forceRefresh: refreshCompanies, getCacheAge: getCompaniesCacheAge, loading: companiesLoading } = useCompanies();
   const [isRefreshing, setIsRefreshing] = useState(false);
+  const refreshTimeoutRef = useRef(null);
+
+  useEffect(() => {
+    return () => {
+      if (refreshTimeoutRef.current) clearTimeout(refreshTimeoutRef.current);
+    };
+  }, []);
 
   const handleRefresh = async () => {
     setIsRefreshing(true);
@@ -14,7 +21,7 @@ const RefreshButton = ({ showLabel = true, className = '' }) => {
     } catch (error) {
       console.error('Error refreshing data:', error);
     } finally {
-      setTimeout(() => setIsRefreshing(false), 500); // Small delay for visual feedback
+      refreshTimeoutRef.current = setTimeout(() => setIsRefreshing(false), 500); // Small delay for visual feedback
     }
   };
 
